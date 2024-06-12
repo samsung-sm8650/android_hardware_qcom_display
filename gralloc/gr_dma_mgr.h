@@ -76,7 +76,7 @@ class DmaManager : public AllocInterface {
   static DmaManager *GetInstance();
 
  private:
-  DmaManager() {}
+  DmaManager();
   int UnmapBuffer(void *base, unsigned int size, unsigned int offset);
   void GetVMPermission(BufferPermission perm, std::bitset<kVmPermissionMax> *vm_perm);
   void GetCSFVersion();
@@ -104,6 +104,9 @@ class DmaManager : public AllocInterface {
   bool uncached_heap_prop_ = false;
   void GetCameraPreviewPerms();
   bool allow_camera_preview_write_ = false;
+
+  void* libvmmemPointer;
+  std::unique_ptr<VmMem> (*createVmMem)();
 };
 
 }  // namespace gralloc
